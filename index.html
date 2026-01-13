@@ -1,229 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tap to See ↕ | Vertical Reveal Generator</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="noise"></div>
-  <div class="gradient-orb gradient-orb-1"></div>
-  <div class="gradient-orb gradient-orb-2"></div>
-  
-  <main class="app">
-    <header class="header">
-      <div class="logo">
-        <span class="logo-icon">↕</span>
-      </div>
-      <h1>Tap to See Vertically</h1>
-      <p class="tagline">Create viral 4-panel reveals for X/Twitter</p>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tap to See ↕ | Vertical Reveal Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="gradient-orb gradient-orb-1"></div>
+    <div class="gradient-orb gradient-orb-2"></div>
 
-    <div class="container">
-      <section class="panel panel-input">
-        <div class="panel-header">
-          <span class="panel-number">01</span>
-          <h2>Create Your Image</h2>
+    <main class="app">
+      <header class="header">
+        <div class="logo">
+          <span class="logo-icon">↕</span>
         </div>
-        
-        <div class="api-key-section">
-          <label for="apiKey">
-            <span class="label-text">Gemini API Key</span>
-            <a href="https://aistudio.google.com/apikey" target="_blank" class="get-key">Get free key →</a>
-          </label>
-          <div class="input-wrapper">
-            <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off">
-            <span class="input-icon">🔑</span>
+        <h1>Tap to See Vertically</h1>
+        <p class="tagline">Create viral 4-panel reveals for X/Twitter</p>
+      </header>
+
+      <div class="container">
+        <section class="panel panel-input">
+          <div class="panel-header">
+            <span class="panel-number">01</span>
+            <h2>Create Your Image</h2>
           </div>
-        </div>
 
-        <div class="prompt-section">
-          <label for="prompt">
-            <span class="label-text">Describe your image</span>
-          </label>
-          <textarea id="prompt" rows="3" placeholder="A majestic phoenix rising from flames, flowing continuously from bottom to top, vibrant colors..."></textarea>
-          <button id="generateBtn" class="btn-generate">
-            <span class="btn-text">Generate with AI</span>
-            <span class="btn-icon">✦</span>
+          <div class="api-key-section">
+            <label for="apiKey">
+              <span class="label-text">Gemini API Key</span>
+              <a
+                href="https://aistudio.google.com/apikey"
+                target="_blank"
+                class="get-key"
+                >Get free key →</a
+              >
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="apiKey"
+                placeholder="AIza..."
+                autocomplete="off"
+              />
+              <span class="input-icon">🔑</span>
+            </div>
+          </div>
+
+          <div class="prompt-section">
+            <label for="prompt">
+              <span class="label-text">Describe your image</span>
+            </label>
+            <textarea
+              id="prompt"
+              rows="3"
+              placeholder="A majestic phoenix rising from flames, flowing continuously from bottom to top, vibrant colors..."
+            ></textarea>
+            <button id="generateBtn" class="btn-generate">
+              <span class="btn-text">Generate with AI</span>
+              <span class="btn-icon">✦</span>
+            </button>
+          </div>
+
+          <div class="divider">
+            <span>or upload your own</span>
+          </div>
+
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" accept="image/*" hidden />
+            <div class="upload-content">
+              <div class="upload-icon">
+                <svg
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+              </div>
+              <p>Drop a tall vertical image here</p>
+              <span class="upload-hint">Best: 9:16 or taller aspect ratio</span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="panel panel-adjust"
+          id="paddingControls"
+          style="display: none"
+        >
+          <div class="panel-header">
+            <span class="panel-number">02</span>
+            <h2>Fine-tune Alignment</h2>
+          </div>
+
+          <p class="panel-description">
+            Choose output format and adjust positioning
+          </p>
+
+          <div class="format-section">
+            <span class="position-label">Output Format</span>
+            <div class="position-buttons format-buttons">
+              <button class="format-btn active" data-format="landscape">
+                <span>▬</span> Wide (16:9)
+              </button>
+              <button class="format-btn" data-format="portrait">
+                <span>▮</span> Tall (9:16)
+              </button>
+            </div>
+            <p class="format-hint" id="formatHint">
+              Wide 1920×1080 - X stacks these vertically when expanded
+            </p>
+          </div>
+
+          <div class="slider-section">
+            <div class="slider-header">
+              <span>Vertical Offset</span>
+              <span class="slider-value" id="paddingValue">50</span
+              ><span class="slider-unit">%</span>
+            </div>
+            <input
+              type="range"
+              id="paddingSlider"
+              min="0"
+              max="100"
+              value="50"
+              class="slider"
+            />
+          </div>
+
+          <div class="position-section">
+            <span class="position-label">Content Position</span>
+            <div class="position-buttons">
+              <button class="position-btn" data-position="top">
+                <span>↑</span> Top
+              </button>
+              <button class="position-btn active" data-position="center">
+                <span>◇</span> Center
+              </button>
+              <button class="position-btn" data-position="bottom">
+                <span>↓</span> Bottom
+              </button>
+            </div>
+          </div>
+
+          <button id="reprocessBtn" class="btn-secondary">
+            <span>Reprocess</span>
+            <span class="btn-icon">↻</span>
           </button>
-        </div>
+        </section>
 
-        <div class="divider">
-          <span>or upload your own</span>
-        </div>
+        <section
+          class="panel panel-preview"
+          id="previewSection"
+          style="display: none"
+        >
+          <div class="panel-header">
+            <span class="panel-number">03</span>
+            <h2>Preview & Export</h2>
+          </div>
 
-        <div class="upload-zone" id="uploadZone">
-          <input type="file" id="fileInput" accept="image/*" hidden>
-          <div class="upload-content">
-            <div class="upload-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="17 8 12 3 7 8"/>
-                <line x1="12" y1="3" x2="12" y2="15"/>
+          <div class="preview-layout">
+            <div class="preview-original">
+              <span class="preview-label">Original</span>
+              <div class="preview-frame">
+                <img id="originalPreview" alt="Original image" />
+              </div>
+            </div>
+
+            <div class="preview-arrow">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </div>
-            <p>Drop a tall vertical image here</p>
-            <span class="upload-hint">Best: 9:16 or taller aspect ratio</span>
-          </div>
-        </div>
-      </section>
 
-      <section class="panel panel-adjust" id="paddingControls" style="display: none;">
-        <div class="panel-header">
-          <span class="panel-number">02</span>
-          <h2>Fine-tune Alignment</h2>
-        </div>
-        
-        <p class="panel-description">Choose output format and adjust positioning</p>
-        
-        <div class="format-section">
-          <span class="position-label">Output Format</span>
-          <div class="position-buttons format-buttons">
-            <button class="format-btn active" data-format="landscape">
-              <span>▬</span> Wide (16:9)
-            </button>
-            <button class="format-btn" data-format="portrait">
-              <span>▮</span> Tall (9:16)
-            </button>
-          </div>
-          <p class="format-hint" id="formatHint">Wide 1920×1080 - X stacks these vertically when expanded</p>
-        </div>
-        
-        <div class="slider-section">
-          <div class="slider-header">
-            <span>Vertical Offset</span>
-            <span class="slider-value" id="paddingValue">50</span><span class="slider-unit">%</span>
-          </div>
-          <input type="range" id="paddingSlider" min="0" max="100" value="50" class="slider">
-        </div>
-
-        <div class="position-section">
-          <span class="position-label">Content Position</span>
-          <div class="position-buttons">
-            <button class="position-btn" data-position="top">
-              <span>↑</span> Top
-            </button>
-            <button class="position-btn active" data-position="center">
-              <span>◇</span> Center
-            </button>
-            <button class="position-btn" data-position="bottom">
-              <span>↓</span> Bottom
-            </button>
-          </div>
-        </div>
-
-        <button id="reprocessBtn" class="btn-secondary">
-          <span>Reprocess</span>
-          <span class="btn-icon">↻</span>
-        </button>
-      </section>
-
-      <section class="panel panel-preview" id="previewSection" style="display: none;">
-        <div class="panel-header">
-          <span class="panel-number">03</span>
-          <h2>Preview & Export</h2>
-        </div>
-
-        <div class="preview-layout">
-          <div class="preview-original">
-            <span class="preview-label">Original</span>
-            <div class="preview-frame">
-              <img id="originalPreview" alt="Original image">
-            </div>
-          </div>
-
-          <div class="preview-arrow">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-
-          <div class="preview-slices">
-            <span class="preview-label">4 Slices for X/Twitter</span>
-            <div class="slices-grid">
-              <div class="slice-card">
-                <div class="slice-number">1</div>
-                <canvas id="slice1"></canvas>
-                <button class="slice-download" data-slice="1">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                  </svg>
-                </button>
-              </div>
-              <div class="slice-card">
-                <div class="slice-number">2</div>
-                <canvas id="slice2"></canvas>
-                <button class="slice-download" data-slice="2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                  </svg>
-                </button>
-              </div>
-              <div class="slice-card">
-                <div class="slice-number">3</div>
-                <canvas id="slice3"></canvas>
-                <button class="slice-download" data-slice="3">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                  </svg>
-                </button>
-              </div>
-              <div class="slice-card">
-                <div class="slice-number">4</div>
-                <canvas id="slice4"></canvas>
-                <button class="slice-download" data-slice="4">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                  </svg>
-                </button>
+            <div class="preview-slices">
+              <span class="preview-label">4 Slices for X/Twitter</span>
+              <div class="slices-grid">
+                <div class="slice-card">
+                  <div class="slice-number">1</div>
+                  <canvas id="slice1"></canvas>
+                  <button class="slice-download" data-slice="1">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="slice-card">
+                  <div class="slice-number">2</div>
+                  <canvas id="slice2"></canvas>
+                  <button class="slice-download" data-slice="2">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="slice-card">
+                  <div class="slice-number">3</div>
+                  <canvas id="slice3"></canvas>
+                  <button class="slice-download" data-slice="3">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="slice-card">
+                  <div class="slice-number">4</div>
+                  <canvas id="slice4"></canvas>
+                  <button class="slice-download" data-slice="4">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <button id="downloadAllBtn" class="btn-primary">
-          <span>Download All as ZIP</span>
-          <span class="btn-icon">↓</span>
-        </button>
+          <button id="downloadAllBtn" class="btn-primary">
+            <span>Download All as ZIP</span>
+            <span class="btn-icon">↓</span>
+          </button>
 
-        <div class="instructions">
-          <h3>How to post on X/Twitter</h3>
-          <ol>
-            <li>Download all 4 PNG images</li>
-            <li>Create new post, select <strong>exactly 4 images</strong></li>
-            <li>Upload in order: <strong>1 → 2 → 3 → 4</strong></li>
-            <li>Grid layout: <code>[1][2]</code> top, <code>[3][4]</code> bottom</li>
-            <li>Add caption like <em>"tap to see ↕"</em> and post!</li>
-          </ol>
-          <p class="instructions-note">
-            <strong>How it works:</strong> X crops each image to show only the center 540px in the 2×2 grid. 
-            When tapped, full 1920px height is revealed vertically!
-          </p>
-        </div>
-      </section>
+          <div class="instructions">
+            <h3>How to post on X/Twitter</h3>
+            <ol>
+              <li>Download all 4 PNG images</li>
+              <li>Create new post, select <strong>exactly 4 images</strong></li>
+              <li>Upload in order: <strong>1 → 2 → 3 → 4</strong></li>
+              <li>
+                Grid layout: <code>[1][2]</code> top, <code>[3][4]</code> bottom
+              </li>
+              <li>Add caption like <em>"tap to see ↕"</em> and post!</li>
+            </ol>
+            <p class="instructions-note">
+              <strong>How it works:</strong> X crops each image to show only the
+              center 540px in the 2×2 grid. When tapped, full 1920px height is
+              revealed vertically!
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <p>
+          Made for the viral reveal trend ✦ Powered by Gemini Nano Banana 🍌
+        </p>
+      </footer>
+    </main>
+
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      <p id="loadingText">Generating...</p>
     </div>
 
-    <footer class="footer">
-      <p>Made for the viral reveal trend ✦ Powered by Gemini Nano Banana 🍌</p>
-    </footer>
-  </main>
+    <div class="toast-container" id="toastContainer"></div>
 
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-spinner">
-      <div class="spinner-ring"></div>
-      <div class="spinner-ring"></div>
-      <div class="spinner-ring"></div>
-    </div>
-    <p id="loadingText">Generating...</p>
-  </div>
-
-  <div class="toast-container" id="toastContainer"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="app.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
