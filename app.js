@@ -355,10 +355,6 @@ class TapToSeeVertically {
 
     // Divide source into 4 strips
     const stripHeight = sourceHeight / 4;
-    
-    // GAP COMPENSATION: X adds ~8-12px gaps between vertically stacked images
-    // We overlap each slice slightly so content flows seamlessly
-    const gapCompensation = Math.floor(stripHeight * 0.03); // ~3% overlap
 
     // Show padding controls
     this.paddingControls.style.display = "block";
@@ -376,15 +372,9 @@ class TapToSeeVertically {
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, outputWidth, outputHeight);
 
-      // Calculate source strip with gap compensation
-      // Each slice starts a bit earlier (except first) to create overlap
-      let srcY = i * stripHeight;
-      if (i > 0) {
-        srcY -= gapCompensation * i;
-      }
-      
-      // Each slice is slightly taller to include overlap content
-      const srcH = stripHeight + (i < 3 ? gapCompensation : 0);
+      // Calculate source strip
+      const srcY = i * stripHeight;
+      const srcH = stripHeight;
 
       if (this.outputFormat === "landscape") {
         // LANDSCAPE MODE: Scale strip to fill 16:9 canvas
