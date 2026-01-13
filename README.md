@@ -1,5 +1,10 @@
 # Tap to See Vertically ↕
 
+![Screenshot 2026-01-12 at 10 42 03 PM](https://github.com/user-attachments/assets/e0b1af28-805d-41df-bc85-00fac9dc0046)
+![Screenshot 2026-01-12 at 10 42 14 PM](https://github.com/user-attachments/assets/ca6e7228-4c88-4a53-9448-90b5f059de73)
+
+
+
 Create viral 4-panel reveal posts for X/Twitter. Upload a tall image, slice it into 4 parts, and watch the magic happen when followers tap to expand!
 
 ![Made for X](https://img.shields.io/badge/Made%20for-X%2FTwitter-black)
